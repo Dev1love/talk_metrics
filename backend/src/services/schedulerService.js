@@ -140,6 +140,9 @@ class SchedulerService {
       // Start periodic metrics recalculation every 6 hours
       this.startPeriodicMetricsRecalculation(6);
 
+      // Start periodic insights generation every 12 hours
+      this.startPeriodicInsightsGeneration(12);
+
       logger.info('All scheduled tasks started successfully');
     } catch (error) {
       logger.error('Failed to start scheduled tasks:', error);
@@ -172,7 +175,9 @@ class SchedulerService {
       tasks: {
         dailyCCI: this.intervals.has('daily_cci') || this.intervals.has('initial_cci'),
         periodicRecalculation: this.intervals.has('periodic_recalc') || this.intervals.has('initial_recalc'),
-        conversationMetrics: Array.from(this.intervals.keys()).filter(key => key.startsWith('metrics_')).length
+        periodicInsights: this.intervals.has('periodic_insights') || this.intervals.has('initial_insights'),
+        conversationMetrics: Array.from(this.intervals.keys()).filter(key => key.startsWith('metrics_')).length,
+        conversationAI: Array.from(this.intervals.keys()).filter(key => key.startsWith('ai_')).length
       }
     };
   }
@@ -181,11 +186,74 @@ class SchedulerService {
   onConversationCreated(conversationId) {
     // Schedule metrics calculation 5 minutes after conversation creation
     this.scheduleMetricsCalculation(conversationId, 5);
+
+    // Schedule AI analysis 2 minutes after conversation creation
+    this.scheduleAIAnalysis(conversationId, 2);
+  }
+
+  // Schedule AI analysis for new conversations
+  async scheduleAIAnalysis(conversationId, delayMinutes = 2) {
+    try {
+      const delay = delayMinutes * 60 * 1000;
+
+      const timeoutId = setTimeout(async () => {
+        try {
+          logger.info(`Auto-starting AI analysis for conversation: ${conversationId}`);
+          const aiAnalysisService = require('./aiAnalysisService');
+          await aiAnalysisService.analyzeConversation(conversationId);
+          logger.info(`AI analysis completed for conversation: ${conversationId}`);
+        } catch (error) {
+          logger.error(`AI analysis failed for conversation ${conversationId}:`, error);
+        }
+      }, delay);
+
+      this.intervals.set(`ai_${conversationId}`, timeoutId);
+
+      logger.info(`Scheduled AI analysis for conversation ${conversationId} in ${delayMinutes} minutes`);
+
+    } catch (error) {
+      logger.error(`Failed to schedule AI analysis for conversation ${conversationId}:`, error);
+    }
+  }
+
+  // Schedule periodic insights generation
+  startPeriodicInsightsGeneration(intervalHours = 12) {
+    try {
+      const generateInsights = async () => {
+        try {
+          logger.info('Starting periodic insights generation');
+
+          const insightsService = require('./insightsGenerationService');
+          const insights = await insightsService.generateInsights();
+
+          logger.info(`Periodic insights generation completed: ${insights.length} insights generated`);
+        } catch (error) {
+          logger.error('Periodic insights generation failed:', error);
+        }
+      };
+
+      // Run immediately on startup (after a delay)
+      const initialTimeout = setTimeout(() => {
+        generateInsights();
+
+        // Set up recurring generation
+        const interval = setInterval(generateInsights, intervalHours * 60 * 60 * 1000);
+        this.intervals.set('periodic_insights', interval);
+      }, 60000); // 1 minute initial delay
+
+      this.intervals.set('initial_insights', initialTimeout);
+
+      logger.info(`Periodic insights generation scheduled every ${intervalHours} hours`);
+
+    } catch (error) {
+      logger.error('Failed to start periodic insights generation:', error);
+    }
   }
 
   // Clean up when conversation is deleted
   onConversationDeleted(conversationId) {
     this.cancelScheduledTask(`metrics_${conversationId}`);
+    this.cancelScheduledTask(`ai_${conversationId}`);
   }
 }
 

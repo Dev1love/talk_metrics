@@ -5,11 +5,13 @@ const router = express.Router();
 const uploadRoutes = require('./upload');
 const conversationRoutes = require('./conversations');
 const metricsRoutes = require('./metrics');
+const aiRoutes = require('./ai');
 
 // Mount routes
 router.use('/upload', uploadRoutes);
 router.use('/conversations', conversationRoutes);
 router.use('/metrics', metricsRoutes);
+router.use('/ai', aiRoutes);
 
 // API info endpoint
 router.get('/', (req, res) => {
@@ -43,8 +45,19 @@ router.get('/', (req, res) => {
         'GET /metrics/analytics/conversions': 'Get conversion analytics',
         'POST /metrics/recalculate-all': 'Recalculate all metrics'
       },
-      insights: {
-        'GET /insights': 'Get generated insights (coming soon)'
+      ai: {
+        'GET /ai/config': 'Get AI configuration and status',
+        'GET /ai/test-connection': 'Test OpenAI connection',
+        'POST /ai/analyze/message/:id': 'Analyze specific message',
+        'POST /ai/analyze/conversation/:id': 'Analyze conversation',
+        'POST /ai/analyze/pending': 'Analyze pending messages',
+        'GET /ai/analysis/intention/:intention': 'Get analysis by intention',
+        'GET /ai/analysis/politeness-trends': 'Get politeness trends',
+        'GET /ai/analysis/sentiment': 'Get sentiment analysis',
+        'GET /ai/analysis/stats': 'Get analysis statistics',
+        'POST /ai/insights/generate': 'Generate insights',
+        'GET /ai/insights': 'Get generated insights',
+        'PATCH /ai/insights/:id/addressed': 'Mark insight as addressed'
       },
       reports: {
         'GET /reports/pdf': 'Generate PDF report (coming soon)',
