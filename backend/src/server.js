@@ -57,21 +57,9 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API routes will be added here
-app.use('/api/v1', (req, res, next) => {
-  res.json({
-    success: true,
-    message: 'TalkMetrics API v1',
-    endpoints: {
-      health: '/health',
-      upload: '/api/v1/upload',
-      conversations: '/api/v1/conversations',
-      metrics: '/api/v1/metrics',
-      insights: '/api/v1/insights',
-      reports: '/api/v1/reports'
-    }
-  });
-});
+// API routes
+const apiRoutes = require('./routes');
+app.use('/api/v1', apiRoutes);
 
 // Error handling
 app.use(notFoundHandler);
