@@ -3,6 +3,7 @@ import metricsSlice from './slices/metricsSlice'
 import conversationsSlice from './slices/conversationsSlice'
 import insightsSlice from './slices/insightsSlice'
 import uiSlice from './slices/uiSlice'
+import uploadSlice from './slices/uploadSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     conversations: conversationsSlice,
     insights: insightsSlice,
     ui: uiSlice,
+    upload: uploadSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

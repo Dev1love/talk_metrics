@@ -16,6 +16,7 @@ import InsightsPage from './pages/InsightsPage'
 import UploadPage from './pages/UploadPage'
 import AnalyticsPage from './pages/AnalyticsPage'
 import SettingsPage from './pages/SettingsPage'
+import ExportPage from './pages/ExportPage'
 
 // Error boundary component
 import ErrorBoundary from './components/common/ErrorBoundary'
@@ -82,6 +83,11 @@ function App() {
               path="settings"
               element={<SettingsPage />}
               loader={() => dispatch(setCurrentPage('settings'))}
+            />
+            <Route
+              path="export"
+              element={<ExportPage />}
+              loader={() => dispatch(setCurrentPage('export'))}
             />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
