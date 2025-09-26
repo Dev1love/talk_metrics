@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # Database service (same as production)
+  postgres:
+    image: postgres:15-alpine
+    container_name: talk_metrics_db_dev
+    environment:
+      POSTGRES_DB: talk_metrics_dev
+      POSTGRES_USER: talk_metrics_user
+      POSTGRES_PASSWORD: talk_metrics_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    networks:
+      - talk_metrics_network_dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U talk_metrics_user -d talk_metrics_dev"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Backend service with development configuration
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: talk_metrics_backend_dev
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: talk_metrics_dev
+      DB_USER: talk_metrics_user
+      DB_PASSWORD: talk_metrics_password
+      DB_SSL: false
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-your_openai_api_key_here}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4}
+      WHATSAPP_API_URL: ${WHATSAPP_API_URL:-https://api.wazzup24.com}
+      WHATSAPP_API_TOKEN: ${WHATSAPP_API_TOKEN:-your_whatsapp_api_token_here}
+      UPLOAD_MAX_SIZE: 10485760
+      UPLOAD_ALLOWED_TYPES: txt,json
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 1000
+      CORS_ORIGIN: http://localhost:3000
+      LOG_LEVEL: debug
+      LOG_FILE_PATH: ./logs/app.log
+      JWT_SECRET: ${JWT_SECRET:-dev_jwt_secret_not_for_production}
+      SESSION_SECRET: ${SESSION_SECRET:-dev_session_secret_not_for_production}
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/logs:/app/logs
+      - ./backend/uploads:/app/uploads
+    networks:
+      - talk_metrics_network_dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    command: ["npm", "run", "dev"]
+
+  # Frontend service with development configuration
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: talk_metrics_frontend_dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    networks:
+      - talk_metrics_network_dev
+    depends_on:
+      - backend
+    restart: unless-stopped
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+volumes:
+  postgres_data_dev:
+
+networks:
+  talk_metrics_network_dev:
+    driver: bridge
