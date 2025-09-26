@@ -6,12 +6,14 @@ const uploadRoutes = require('./upload');
 const conversationRoutes = require('./conversations');
 const metricsRoutes = require('./metrics');
 const aiRoutes = require('./ai');
+const exportRoutes = require('./export');
 
 // Mount routes
 router.use('/upload', uploadRoutes);
 router.use('/conversations', conversationRoutes);
 router.use('/metrics', metricsRoutes);
 router.use('/ai', aiRoutes);
+router.use('/export', exportRoutes);
 
 // API info endpoint
 router.get('/', (req, res) => {
@@ -59,9 +61,11 @@ router.get('/', (req, res) => {
         'GET /ai/insights': 'Get generated insights',
         'PATCH /ai/insights/:id/addressed': 'Mark insight as addressed'
       },
-      reports: {
-        'GET /reports/pdf': 'Generate PDF report (coming soon)',
-        'GET /reports/csv': 'Generate CSV export (coming soon)'
+      export: {
+        'POST /export/pdf': 'Generate PDF report',
+        'POST /export/csv': 'Generate CSV export',
+        'GET /export/formats': 'Get available export formats',
+        'GET /export/history': 'Get export history'
       }
     }
   });
