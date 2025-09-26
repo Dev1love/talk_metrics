@@ -4,10 +4,12 @@ const router = express.Router();
 // Import route modules
 const uploadRoutes = require('./upload');
 const conversationRoutes = require('./conversations');
+const metricsRoutes = require('./metrics');
 
 // Mount routes
 router.use('/upload', uploadRoutes);
 router.use('/conversations', conversationRoutes);
+router.use('/metrics', metricsRoutes);
 
 // API info endpoint
 router.get('/', (req, res) => {
@@ -32,8 +34,14 @@ router.get('/', (req, res) => {
         'DELETE /conversations/:id': 'Delete conversation'
       },
       metrics: {
-        'GET /metrics': 'Get global metrics (coming soon)',
-        'GET /metrics/conversation/:id': 'Get conversation metrics (coming soon)'
+        'GET /metrics': 'Get global metrics and CCI',
+        'GET /metrics/conversation/:id': 'Get conversation metrics',
+        'POST /metrics/conversation/:id/recalculate': 'Recalculate conversation metrics',
+        'GET /metrics/cci': 'Calculate Communication Quality Index',
+        'GET /metrics/summary': 'Get metrics summary by platform',
+        'GET /metrics/analytics/response-times': 'Get response time analytics',
+        'GET /metrics/analytics/conversions': 'Get conversion analytics',
+        'POST /metrics/recalculate-all': 'Recalculate all metrics'
       },
       insights: {
         'GET /insights': 'Get generated insights (coming soon)'

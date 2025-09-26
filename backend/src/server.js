@@ -70,4 +70,12 @@ app.listen(PORT, () => {
   logger.info(`TalkMetrics API server running on port ${PORT}`);
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
+  console.log(`📈 API docs: http://localhost:${PORT}/api/v1`);
+
+  // Start scheduled tasks in production
+  if (process.env.NODE_ENV === 'production') {
+    const schedulerService = require('./services/schedulerService');
+    schedulerService.startAllTasks();
+    logger.info('Scheduled tasks started');
+  }
 });

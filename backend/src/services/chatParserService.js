@@ -105,6 +105,10 @@ class ChatParserService {
         conversation_id: conversation.id
       };
 
+      // Schedule metrics calculation for the new conversation
+      const schedulerService = require('./schedulerService');
+      schedulerService.onConversationCreated(conversation.id);
+
       logger.info(`Database save completed for upload ${uploadId}:`, stats);
       return stats;
 
