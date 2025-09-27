@@ -24,6 +24,9 @@ import ErrorBoundary from './components/common/ErrorBoundary'
 // Loading component
 import LoadingSpinner from './components/common/LoadingSpinner'
 
+// Theme context
+import { ThemeProvider } from './contexts/ThemeContext'
+
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state: RootState) => state.ui)
@@ -43,65 +46,67 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-primary-50/30 to-purple-50/30 relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-success-400/20 to-warning-600/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary-300/10 to-purple-300/10 rounded-full blur-3xl"></div>
-        </div>
+      <ThemeProvider>
+        <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-primary-50/30 to-purple-50/30 dark:from-gray-900 dark:via-gray-900/80 dark:to-purple-900/20 relative overflow-hidden transition-colors duration-300">
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary-400/20 to-purple-600/20 dark:from-primary-400/30 dark:to-purple-600/30 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-success-400/20 to-warning-600/20 dark:from-success-400/30 dark:to-warning-600/30 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary-300/10 to-purple-300/10 dark:from-primary-300/20 dark:to-purple-300/20 rounded-full blur-3xl"></div>
+          </div>
 
-        <div className="relative z-10">
-          {loading.global && <LoadingSpinner overlay />}
+          <div className="relative z-10">
+            {loading.global && <LoadingSpinner overlay />}
 
-        <Routes>
-          <Route path="/" element={<DashboardLayout />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route
-              path="dashboard"
-              element={<DashboardPage />}
-              loader={() => dispatch(setCurrentPage('dashboard'))}
-            />
-            <Route
-              path="conversations"
-              element={<ConversationsPage />}
-              loader={() => dispatch(setCurrentPage('conversations'))}
-            />
-            <Route
-              path="conversations/:id"
-              element={<ConversationDetailsPage />}
-              loader={() => dispatch(setCurrentPage('conversations'))}
-            />
-            <Route
-              path="insights"
-              element={<InsightsPage />}
-              loader={() => dispatch(setCurrentPage('insights'))}
-            />
-            <Route
-              path="upload"
-              element={<UploadPage />}
-              loader={() => dispatch(setCurrentPage('upload'))}
-            />
-            <Route
-              path="analytics"
-              element={<AnalyticsPage />}
-              loader={() => dispatch(setCurrentPage('analytics'))}
-            />
-            <Route
-              path="settings"
-              element={<SettingsPage />}
-              loader={() => dispatch(setCurrentPage('settings'))}
-            />
-            <Route
-              path="export"
-              element={<ExportPage />}
-              loader={() => dispatch(setCurrentPage('export'))}
-            />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Route>
-        </Routes>
+            <Routes>
+              <Route path="/" element={<DashboardLayout />}>
+                <Route index element={<Navigate to="/dashboard" replace />} />
+                <Route
+                  path="dashboard"
+                  element={<DashboardPage />}
+                  loader={() => dispatch(setCurrentPage('dashboard'))}
+                />
+                <Route
+                  path="conversations"
+                  element={<ConversationsPage />}
+                  loader={() => dispatch(setCurrentPage('conversations'))}
+                />
+                <Route
+                  path="conversations/:id"
+                  element={<ConversationDetailsPage />}
+                  loader={() => dispatch(setCurrentPage('conversations'))}
+                />
+                <Route
+                  path="insights"
+                  element={<InsightsPage />}
+                  loader={() => dispatch(setCurrentPage('insights'))}
+                />
+                <Route
+                  path="upload"
+                  element={<UploadPage />}
+                  loader={() => dispatch(setCurrentPage('upload'))}
+                />
+                <Route
+                  path="analytics"
+                  element={<AnalyticsPage />}
+                  loader={() => dispatch(setCurrentPage('analytics'))}
+                />
+                <Route
+                  path="settings"
+                  element={<SettingsPage />}
+                  loader={() => dispatch(setCurrentPage('settings'))}
+                />
+                <Route
+                  path="export"
+                  element={<ExportPage />}
+                  loader={() => dispatch(setCurrentPage('export'))}
+                />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              </Route>
+            </Routes>
+          </div>
         </div>
-      </div>
+      </ThemeProvider>
     </ErrorBoundary>
   )
 }

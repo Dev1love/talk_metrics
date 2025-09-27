@@ -37,13 +37,13 @@ const DashboardPage: React.FC = () => {
       {/* Page header */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-purple-600/10 rounded-2xl blur-3xl"></div>
-        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 p-8 shadow-soft">
+        <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-gray-700/30 p-8 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-900 to-secondary-700 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-900 to-secondary-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
                 Добро пожаловать в TalkMetrics
               </h1>
-              <p className="mt-3 text-lg text-secondary-600 max-w-2xl">
+              <p className="mt-3 text-lg text-secondary-600 dark:text-gray-300 max-w-2xl">
                 Анализ качества коммуникации и метрики эффективности вашей команды
               </p>
             </div>

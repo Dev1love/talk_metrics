@@ -17,6 +17,7 @@ import { fetchGlobalMetrics, recalculateAllMetrics } from '../../store/slices/me
 // Components
 import NotificationPanel from '../common/NotificationPanel'
 import DateRangePicker from '../common/DateRangePicker'
+import ThemeToggle from '../common/ThemeToggle'
 
 const Header: React.FC = () => {
   const dispatch = useDispatch()
@@ -89,7 +90,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <header className="bg-white border-b border-secondary-200 px-4 py-3 shadow-sm">
+    <header className="bg-white dark:bg-gray-800/90 border-b border-secondary-200 dark:border-gray-700/50 px-4 py-3 shadow-sm backdrop-blur-sm transition-colors duration-300">
       <div className="flex items-center justify-between">
         {/* Left side - Menu toggle and page title */}
         <div className="flex items-center">
@@ -105,13 +106,16 @@ const Header: React.FC = () => {
             )}
           </button>
 
-          <h1 className="ml-2 text-xl font-semibold text-secondary-900 md:text-2xl">
+          <h1 className="ml-2 text-xl font-semibold text-secondary-900 dark:text-gray-100 md:text-2xl transition-colors duration-300">
             {getPageTitle()}
           </h1>
         </div>
 
         {/* Right side - Actions and notifications */}
         <div className="flex items-center space-x-2">
+          {/* Theme toggle */}
+          <ThemeToggle />
+
           {/* Date range picker */}
           <div className="relative">
             <button

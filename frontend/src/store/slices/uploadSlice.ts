@@ -27,7 +27,7 @@ export const uploadChatFile = createAsyncThunk(
   'upload/uploadChatFile',
   async (formData: FormData, { rejectWithValue }) => {
     try {
-      const response = await fetch('/api/upload/chat-file', {
+      const response = await fetch('/api/v1/upload', {
         method: 'POST',
         body: formData
       })
