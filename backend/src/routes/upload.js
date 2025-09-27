@@ -9,6 +9,21 @@ const {
   addFileMetadata
 } = require('../middleware/uploadHandler');
 
+// Test endpoint to verify routing
+router.get('/test', (req, res) => {
+  res.json({ success: true, message: 'Upload route is working!' });
+});
+
+// Test POST endpoint
+router.post('/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Upload POST route is working!',
+    body: req.body,
+    headers: req.headers
+  });
+});
+
 // Upload chat files
 router.post(
   '/',
