@@ -115,7 +115,7 @@ const ChatUpload: React.FC = () => {
 
       clearInterval(progressInterval)
 
-      // Debug logging
+      // Debug logging - result is the backend response
       console.log('Upload result:', result)
       console.log('Data wrapper:', result.data)
       console.log('Results array:', result.data?.results)
@@ -124,8 +124,10 @@ const ChatUpload: React.FC = () => {
       console.log('conversations_created:', result.data?.results?.[0]?.stats?.conversations_created)
       console.log('messages_created:', result.data?.results?.[0]?.stats?.messages_created)
 
-      const conversationsCount = result.data?.results?.[0]?.stats?.conversations_created || 0
-      const messagesCount = result.data?.results?.[0]?.stats?.messages_created || 0
+      // Extract counts from the backend response structure
+      const firstResult = result.data?.results?.[0]
+      const conversationsCount = firstResult?.stats?.conversations_created || 0
+      const messagesCount = firstResult?.stats?.messages_created || 0
 
       console.log('Final counts:', { conversationsCount, messagesCount })
 
