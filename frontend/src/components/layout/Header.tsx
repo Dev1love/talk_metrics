@@ -113,8 +113,8 @@ const Header: React.FC = () => {
 
         {/* Right side - Actions and notifications */}
         <div className="flex items-center space-x-2">
-          {/* Theme toggle */}
-          <ThemeToggle />
+          {/* Theme toggle - hidden for now */}
+          {/* <ThemeToggle /> */}
 
           {/* Date range picker */}
           <div className="relative">
