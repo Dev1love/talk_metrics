@@ -115,6 +115,19 @@ const ChatUpload: React.FC = () => {
 
       clearInterval(progressInterval)
 
+      // Debug logging
+      console.log('Upload result:', result)
+      console.log('Results array:', result.results)
+      console.log('First result:', result.results?.[0])
+      console.log('Stats:', result.results?.[0]?.stats)
+      console.log('conversations_created:', result.results?.[0]?.stats?.conversations_created)
+      console.log('messages_created:', result.results?.[0]?.stats?.messages_created)
+
+      const conversationsCount = result.results?.[0]?.stats?.conversations_created || 0
+      const messagesCount = result.results?.[0]?.stats?.messages_created || 0
+
+      console.log('Final counts:', { conversationsCount, messagesCount })
+
       setFiles(prev => prev.map(f =>
         f.id === file.id
           ? {
@@ -122,8 +135,8 @@ const ChatUpload: React.FC = () => {
               status: 'success' as const,
               progress: 100,
               result: {
-                conversationsCount: result.data?.results?.[0]?.stats?.conversations_created || 0,
-                messagesCount: result.data?.results?.[0]?.stats?.messages_created || 0
+                conversationsCount,
+                messagesCount
               }
             }
           : f
