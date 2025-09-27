@@ -117,14 +117,15 @@ const ChatUpload: React.FC = () => {
 
       // Debug logging
       console.log('Upload result:', result)
-      console.log('Results array:', result.results)
-      console.log('First result:', result.results?.[0])
-      console.log('Stats:', result.results?.[0]?.stats)
-      console.log('conversations_created:', result.results?.[0]?.stats?.conversations_created)
-      console.log('messages_created:', result.results?.[0]?.stats?.messages_created)
+      console.log('Data wrapper:', result.data)
+      console.log('Results array:', result.data?.results)
+      console.log('First result:', result.data?.results?.[0])
+      console.log('Stats:', result.data?.results?.[0]?.stats)
+      console.log('conversations_created:', result.data?.results?.[0]?.stats?.conversations_created)
+      console.log('messages_created:', result.data?.results?.[0]?.stats?.messages_created)
 
-      const conversationsCount = result.results?.[0]?.stats?.conversations_created || 0
-      const messagesCount = result.results?.[0]?.stats?.messages_created || 0
+      const conversationsCount = result.data?.results?.[0]?.stats?.conversations_created || 0
+      const messagesCount = result.data?.results?.[0]?.stats?.messages_created || 0
 
       console.log('Final counts:', { conversationsCount, messagesCount })
 
