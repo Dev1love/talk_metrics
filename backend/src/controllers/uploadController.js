@@ -28,6 +28,7 @@ class UploadController {
       const results = [];
 
       for (const file of files) {
+        let upload; // Declare upload at proper scope
         try {
           logger.info(`Processing file: ${file.originalname}`, {
             size: file.size,
@@ -37,7 +38,6 @@ class UploadController {
           });
 
           // Create upload record
-          let upload;
           try {
             upload = await FileUpload.createUpload({
               filename: file.originalname,
