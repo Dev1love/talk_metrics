@@ -49,6 +49,14 @@ const upload = multer({
 
 // Custom middleware to handle upload errors
 const handleUploadErrors = (error, req, res, next) => {
+  // Log all upload errors for debugging
+  logger.error('Upload middleware error:', {
+    error: error.message,
+    code: error.code,
+    stack: error.stack,
+    type: error.constructor.name
+  });
+
   if (error instanceof multer.MulterError) {
     let message = 'Upload error';
     let statusCode = 400;
@@ -67,6 +75,8 @@ const handleUploadErrors = (error, req, res, next) => {
         message = error.message;
     }
 
+    logger.error('Multer error details:', { code: error.code, message });
+
     return res.status(statusCode).json({
       success: false,
       error: { message }
@@ -74,12 +84,15 @@ const handleUploadErrors = (error, req, res, next) => {
   }
 
   if (error.statusCode === 400) {
+    logger.error('Validation error:', error.message);
     return res.status(400).json({
       success: false,
       error: { message: error.message }
     });
   }
 
+  // Log unexpected errors
+  logger.error('Unexpected upload error:', error);
   next(error);
 };
 
@@ -108,7 +121,18 @@ const validatePlatform = (req, res, next) => {
 
 // Middleware to add file metadata
 const addFileMetadata = (req, res, next) => {
+  // Debug logging
+  logger.info('File metadata middleware:', {
+    hasFile: !!req.file,
+    body: req.body,
+    files: req.files
+  });
+
   if (!req.file) {
+    logger.error('No file in request:', {
+      body: req.body,
+      files: req.files
+    });
     return res.status(400).json({
       success: false,
       error: { message: 'No file uploaded' }
@@ -121,6 +145,12 @@ const addFileMetadata = (req, res, next) => {
 
   // Convert single file to array for controller compatibility
   req.files = [req.file];
+
+  logger.info('File processed successfully:', {
+    filename: req.file.originalname,
+    type: req.file.type,
+    platform: req.file.platform
+  });
 
   next();
 };
