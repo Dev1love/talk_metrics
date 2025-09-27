@@ -9,7 +9,14 @@ class UploadController {
       const { platform } = req.body;
       const files = req.files;
 
+      logger.info('Upload request received:', {
+        platform,
+        files: files ? files.length : 0,
+        body: req.body
+      });
+
       if (!files || files.length === 0) {
+        logger.error('No files in request');
         return res.status(400).json({
           success: false,
           error: { message: 'No files uploaded' }
@@ -22,6 +29,13 @@ class UploadController {
 
       for (const file of files) {
         try {
+          logger.info(`Processing file: ${file.originalname}`, {
+            size: file.size,
+            mimetype: file.mimetype,
+            platform: platform,
+            path: file.path
+          });
+
           // Create upload record
           const upload = await FileUpload.createUpload({
             filename: file.originalname,
@@ -30,11 +44,17 @@ class UploadController {
             platform: platform
           });
 
+          logger.info(`Upload record created with ID: ${upload.id}`);
+
           // Update status to processing
           await FileUpload.updateProcessingStatus(upload.id, 'processing');
 
+          logger.info(`Starting file parsing for ${file.originalname}`);
+
           // Process the file
           const stats = await chatParserService.parseFile(file, platform, upload.id);
+
+          logger.info(`File parsing completed for ${file.originalname}`, stats);
 
           // Update status to completed with stats
           await FileUpload.updateProcessingStatus(upload.id, 'completed', null, stats);
@@ -49,7 +69,12 @@ class UploadController {
           logger.info(`Successfully processed file: ${file.originalname}`, stats);
 
         } catch (error) {
-          logger.error(`Failed to process file ${file.originalname}:`, error);
+          logger.error(`Failed to process file ${file.originalname}:`, {
+            error: error.message,
+            stack: error.stack,
+            file: file.originalname,
+            platform: platform
+          });
 
           // Update status to failed
           if (upload && upload.id) {
