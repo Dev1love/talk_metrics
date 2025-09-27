@@ -98,8 +98,15 @@ export const fetchConversations = createAsyncThunk(
     status?: string
     search?: string
   }) => {
-    const response = await api.get('/conversations', { params })
-    return response.data.data
+    try {
+      const response = await api.get('/conversations', { params })
+      return response.data.data
+    } catch (error) {
+      // Fallback to demo data if regular API fails
+      console.warn('Regular conversations API failed, using demo data')
+      const demoResponse = await api.get('/demo/conversations', { params })
+      return demoResponse.data
+    }
   }
 )
 

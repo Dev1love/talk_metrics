@@ -49,8 +49,15 @@ const initialState: InsightsState = {
 export const fetchInsights = createAsyncThunk(
   'insights/fetchInsights',
   async (filters: InsightFilters = {}) => {
-    const response = await api.get('/ai/insights', { params: filters })
-    return response.data.data
+    try {
+      const response = await api.get('/ai/insights', { params: filters })
+      return response.data.data
+    } catch (error) {
+      // Fallback to demo data if regular API fails
+      console.warn('Regular insights API failed, using demo data')
+      const demoResponse = await api.get('/demo/insights', { params: filters })
+      return demoResponse.data
+    }
   }
 )
 

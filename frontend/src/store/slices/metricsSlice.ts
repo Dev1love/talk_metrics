@@ -69,8 +69,15 @@ const initialState: MetricsState = {
 export const fetchGlobalMetrics = createAsyncThunk(
   'metrics/fetchGlobalMetrics',
   async (params?: { dateRange?: string }) => {
-    const response = await api.get('/metrics', { params })
-    return response.data.data
+    try {
+      const response = await api.get('/metrics', { params })
+      return response.data.data
+    } catch (error) {
+      // Fallback to demo data if regular API fails
+      console.warn('Regular metrics API failed, using demo data')
+      const demoResponse = await api.get('/demo/metrics', { params })
+      return demoResponse.data
+    }
   }
 )
 
