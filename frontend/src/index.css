@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Import Inter font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -13,11 +13,32 @@
 
   body {
     @apply bg-secondary-50 text-secondary-900;
+    /* Fallback styles if Tailwind doesn't load */
+    background: linear-gradient(135deg, #f8fafc 0%, rgba(59, 130, 246, 0.05) 50%, rgba(168, 85, 247, 0.05) 100%);
+    color: #0f172a;
+    min-height: 100vh;
   }
 
   * {
     @apply scrollbar-thin scrollbar-thumb-secondary-300 scrollbar-track-transparent;
   }
+}
+
+/* Fallback styles for critical elements */
+.bg-white {
+  background-color: white !important;
+}
+
+.text-secondary-900 {
+  color: #0f172a !important;
+}
+
+.rounded-xl, .rounded-2xl {
+  border-radius: 1rem !important;
+}
+
+.shadow-soft {
+  box-shadow: 0 2px 8px 0 rgba(99, 99, 99, 0.2) !important;
 }
 
 /* Custom scrollbar styles */
