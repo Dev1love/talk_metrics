@@ -39,23 +39,23 @@ const MetricCard: React.FC<MetricCardProps> = ({
   }
 
   return (
-    <div className="bg-white rounded-lg border border-secondary-200 p-4 hover:shadow-medium transition-shadow duration-200">
+    <div className="group bg-white rounded-xl border border-secondary-200/50 p-5 hover:shadow-strong hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
       <div className="flex items-center">
-        <div className={`p-2 rounded-lg ${colorClasses[color as keyof typeof colorClasses]}`}>
+        <div className={`p-3 rounded-xl shadow-sm group-hover:scale-110 transition-transform duration-200 ${colorClasses[color as keyof typeof colorClasses]}`}>
           {icon}
         </div>
-        <div className="ml-3 flex-1">
-          <p className="text-sm font-medium text-secondary-600">{title}</p>
+        <div className="ml-4 flex-1">
+          <p className="text-sm font-semibold text-secondary-600 mb-1">{title}</p>
           <div className="flex items-baseline">
-            <p className="text-2xl font-bold text-secondary-900">{value}</p>
-            {unit && <span className="ml-1 text-sm text-secondary-500">{unit}</span>}
+            <p className="text-3xl font-bold text-secondary-900">{value}</p>
+            {unit && <span className="ml-2 text-base text-secondary-500 font-medium">{unit}</span>}
           </div>
           {change !== undefined && (
-            <div className="flex items-center mt-1">
-              <TrendingUp className={`h-3 w-3 mr-1 ${
+            <div className="flex items-center mt-2 px-2 py-1 rounded-full bg-secondary-50/50">
+              <TrendingUp className={`h-3 w-3 mr-1 transition-transform duration-200 ${
                 change >= 0 ? 'text-success-600' : 'text-error-600 rotate-180'
               }`} />
-              <span className={`text-xs ${
+              <span className={`text-xs font-semibold ${
                 change >= 0 ? 'text-success-600' : 'text-error-600'
               }`}>
                 {Math.abs(change)}% {changeLabel || 'к прошлому периоду'}
@@ -147,17 +147,21 @@ const MetricsOverview: React.FC = () => {
   ]
 
   return (
-    <div className="bg-white rounded-lg border border-secondary-200 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-secondary-900">
-          Основные метрики
-        </h3>
-        <div className="text-sm text-secondary-500">
-          Всего диалогов: {metrics.total_conversations}
+    <div className="bg-white rounded-2xl border border-secondary-200/50 p-8 shadow-soft hover:shadow-medium transition-all duration-300">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h3 className="text-2xl font-bold text-secondary-900 mb-1">
+            Основные метрики
+          </h3>
+          <p className="text-secondary-600">Анализ эффективности коммуникации</p>
+        </div>
+        <div className="flex items-center bg-gradient-to-r from-primary-50 to-purple-50 rounded-xl px-4 py-2 border border-primary-100">
+          <div className="text-sm text-secondary-600">Всего диалогов:</div>
+          <div className="ml-2 text-lg font-bold text-primary-600">{metrics.total_conversations}</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
         {metricsData.map((metric, index) => (
           <MetricCard
             key={index}
@@ -172,31 +176,31 @@ const MetricsOverview: React.FC = () => {
       </div>
 
       {/* Summary stats */}
-      <div className="mt-6 pt-6 border-t border-secondary-200">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-secondary-900">
+      <div className="border-t border-gradient-to-r from-secondary-200 via-primary-200 to-secondary-200 pt-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="text-center group">
+            <div className="text-3xl font-bold text-secondary-900 mb-1 group-hover:text-primary-600 transition-colors">
               {metrics.total_conversations}
             </div>
-            <div className="text-sm text-secondary-600">Всего диалогов</div>
+            <div className="text-sm font-medium text-secondary-600">Всего диалогов</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-secondary-900">
+          <div className="text-center group">
+            <div className="text-3xl font-bold text-success-600 mb-1 group-hover:scale-105 transition-transform">
               {metrics.completed_conversations}
             </div>
-            <div className="text-sm text-secondary-600">Завершено</div>
+            <div className="text-sm font-medium text-secondary-600">Завершено</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-secondary-900">
+          <div className="text-center group">
+            <div className="text-3xl font-bold text-warning-600 mb-1 group-hover:scale-105 transition-transform">
               {Math.round(metrics.upsell_rate)}%
             </div>
-            <div className="text-sm text-secondary-600">Допродажи</div>
+            <div className="text-sm font-medium text-secondary-600">Допродажи</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary-600">
+          <div className="text-center group">
+            <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent mb-1 group-hover:scale-105 transition-transform">
               {globalMetrics.cci_score}
             </div>
-            <div className="text-sm text-secondary-600">CCI Score</div>
+            <div className="text-sm font-medium text-secondary-600">CCI Score</div>
           </div>
         </div>
       </div>

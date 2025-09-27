@@ -33,15 +33,35 @@ const DashboardPage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fade-in">
       {/* Page header */}
-      <div>
-        <h1 className="text-2xl font-bold text-secondary-900">
-          Добро пожаловать в TalkMetrics
-        </h1>
-        <p className="mt-2 text-secondary-600">
-          Анализ качества коммуникации и метрики эффективности вашей команды
-        </p>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-purple-600/10 rounded-2xl blur-3xl"></div>
+        <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 p-8 shadow-soft">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-900 to-secondary-700 bg-clip-text text-transparent">
+                Добро пожаловать в TalkMetrics
+              </h1>
+              <p className="mt-3 text-lg text-secondary-600 max-w-2xl">
+                Анализ качества коммуникации и метрики эффективности вашей команды
+              </p>
+            </div>
+            <div className="hidden lg:flex items-center space-x-4">
+              <div className="flex -space-x-2">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-medium shadow-lg">
+                  AI
+                </div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-success-400 to-success-600 flex items-center justify-center text-white text-sm font-medium shadow-lg">
+                  ✓
+                </div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-warning-400 to-warning-600 flex items-center justify-center text-white text-sm font-medium shadow-lg">
+                  📊
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Quick actions */}

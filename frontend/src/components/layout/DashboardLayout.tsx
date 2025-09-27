@@ -44,7 +44,7 @@ const DashboardLayout: React.FC = () => {
   }, [location.pathname, isMobile, dispatch])
 
   return (
-    <div className="flex h-screen bg-secondary-50">
+    <div className="flex h-screen bg-transparent">
       {/* Sidebar */}
       <div
         className={`
@@ -71,14 +71,16 @@ const DashboardLayout: React.FC = () => {
         <Header />
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto bg-secondary-50 p-4 md:p-6">
+        <main className="flex-1 overflow-y-auto bg-transparent p-4 md:p-6">
           <div className="mx-auto max-w-7xl">
             {loading.global ? (
               <div className="flex items-center justify-center h-64">
                 <LoadingSpinner size="lg" />
               </div>
             ) : (
-              <Outlet />
+              <div className="animate-fade-in">
+                <Outlet />
+              </div>
             )}
           </div>
         </main>
