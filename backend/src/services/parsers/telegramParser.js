@@ -61,6 +61,7 @@ class TelegramParser {
               participants.set(participantKey, {
                 name: message.participant_name,
                 phone: message.participant_phone,
+                platform: 'telegram',
                 platform_id: message.participant_username || message.participant_id,
                 is_business: isBusiness
               });

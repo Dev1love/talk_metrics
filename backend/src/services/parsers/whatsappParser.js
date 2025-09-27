@@ -66,6 +66,7 @@ class WhatsAppParser {
           participants.set(normalizedName, {
             name: normalizedName,
             phone: this.extractPhone(contactName),
+            platform: 'whatsapp',
             platform_id: normalizedName.toLowerCase().replace(/\s+/g, '_'),
             is_business: isBusiness
           });
