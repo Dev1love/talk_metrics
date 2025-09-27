@@ -24,10 +24,27 @@ router.post('/test', (req, res) => {
   });
 });
 
+// Simple upload test without middleware
+router.post('/simple', (req, res) => {
+  console.log('Simple upload endpoint hit!');
+  console.log('Body:', req.body);
+  console.log('Files:', req.files);
+  console.log('Headers:', req.headers);
+  res.json({ success: true, message: 'Simple upload endpoint working' });
+});
+
 // Upload chat files
 router.post(
   '/',
+  (req, res, next) => {
+    console.log('Upload endpoint hit - before multer');
+    next();
+  },
   upload,
+  (req, res, next) => {
+    console.log('Upload endpoint - after multer, before error handler');
+    next();
+  },
   handleUploadErrors,
   validatePlatform,
   addFileMetadata,
