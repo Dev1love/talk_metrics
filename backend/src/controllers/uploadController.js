@@ -37,14 +37,19 @@ class UploadController {
           });
 
           // Create upload record
-          const upload = await FileUpload.createUpload({
-            filename: file.originalname,
-            size: file.size,
-            type: file.type,
-            platform: platform
-          });
-
-          logger.info(`Upload record created with ID: ${upload.id}`);
+          let upload;
+          try {
+            upload = await FileUpload.createUpload({
+              filename: file.originalname,
+              size: file.size,
+              type: file.type,
+              platform: platform
+            });
+            logger.info(`Upload record created with ID: ${upload.id}`);
+          } catch (dbError) {
+            console.error('DATABASE ERROR creating upload record:', dbError.message);
+            throw new Error(`Database error: ${dbError.message}`);
+          }
 
           // Update status to processing
           await FileUpload.updateProcessingStatus(upload.id, 'processing');
@@ -110,7 +115,14 @@ class UploadController {
       });
 
     } catch (error) {
-      logger.error('Upload processing error:', error);
+      logger.error('Upload processing error:', {
+        error: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+
+      console.error('UPLOAD ERROR:', error.message);
+      console.error('STACK:', error.stack);
 
       // Clean up files in case of general error
       if (req.files) {
@@ -121,7 +133,7 @@ class UploadController {
         success: false,
         error: {
           message: 'Failed to process uploads',
-          details: process.env.NODE_ENV === 'development' ? error.message : undefined
+          details: error.message // Always show error details for debugging
         }
       });
     }
