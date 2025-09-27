@@ -122,8 +122,8 @@ const ChatUpload: React.FC = () => {
               status: 'success' as const,
               progress: 100,
               result: {
-                conversationsCount: result.results?.[0]?.stats?.conversations_created || 0,
-                messagesCount: result.results?.[0]?.stats?.messages_created || 0
+                conversationsCount: result.data?.results?.[0]?.stats?.conversations_created || 0,
+                messagesCount: result.data?.results?.[0]?.stats?.messages_created || 0
               }
             }
           : f
