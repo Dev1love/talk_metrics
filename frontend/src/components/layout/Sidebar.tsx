@@ -45,19 +45,19 @@ const Sidebar: React.FC = () => {
   })
 
   return (
-    <div className="flex flex-col h-full bg-white border-r border-secondary-200 shadow-sm">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-800 border-r border-secondary-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
       {/* Logo and brand */}
-      <div className="flex items-center px-4 py-4 border-b border-secondary-200">
+      <div className="flex items-center px-4 py-4 border-b border-secondary-200 dark:border-gray-700">
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <Activity className="h-8 w-8 text-primary-600" />
           </div>
           {!sidebarCollapsed && (
             <div className="ml-3">
-              <h1 className="text-lg font-semibold text-secondary-900">
+              <h1 className="text-lg font-semibold text-secondary-900 dark:text-gray-100">
                 TalkMetrics
               </h1>
-              <p className="text-xs text-secondary-500">
+              <p className="text-xs text-secondary-500 dark:text-gray-400">
                 v1.0.0
               </p>
             </div>
@@ -67,9 +67,9 @@ const Sidebar: React.FC = () => {
 
       {/* CCI Score Display */}
       {!sidebarCollapsed && globalMetrics && (
-        <div className="px-4 py-3 border-b border-secondary-200">
+        <div className="px-4 py-3 border-b border-secondary-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-secondary-700">
+            <span className="text-sm font-medium text-secondary-700 dark:text-gray-300">
               CCI Score
             </span>
             <div className="flex items-center">
@@ -84,10 +84,10 @@ const Sidebar: React.FC = () => {
               >
                 {globalMetrics.cci_score}
               </span>
-              <span className="text-sm text-secondary-500 ml-1">/100</span>
+              <span className="text-sm text-secondary-500 dark:text-gray-400 ml-1">/100</span>
             </div>
           </div>
-          <div className="mt-2 w-full bg-secondary-200 rounded-full h-2">
+          <div className="mt-2 w-full bg-secondary-200 dark:bg-gray-700 rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all duration-500 ${
                 globalMetrics.cci_score >= 80
@@ -111,8 +111,8 @@ const Sidebar: React.FC = () => {
             className={({ isActive }) =>
               `group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150 ${
                 isActive
-                  ? 'bg-primary-100 text-primary-900 border-r-2 border-primary-600'
-                  : 'text-secondary-600 hover:bg-secondary-50 hover:text-secondary-900'
+                  ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-900 dark:text-primary-400 border-r-2 border-primary-600 dark:border-primary-400'
+                  : 'text-secondary-600 dark:text-gray-300 hover:bg-secondary-50 dark:hover:bg-gray-700/50 hover:text-secondary-900 dark:hover:text-gray-100'
               }`
             }
           >
@@ -125,7 +125,7 @@ const Sidebar: React.FC = () => {
               <>
                 <span className="flex-1">{item.name}</span>
                 {item.badge && (
-                  <span className="ml-3 inline-block py-0.5 px-2 text-xs font-medium bg-primary-100 text-primary-600 rounded-full">
+                  <span className="ml-3 inline-block py-0.5 px-2 text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full">
                     {item.badge}
                   </span>
                 )}
@@ -136,17 +136,17 @@ const Sidebar: React.FC = () => {
       </nav>
 
       {/* Footer with status */}
-      <div className="px-4 py-3 border-t border-secondary-200">
+      <div className="px-4 py-3 border-t border-secondary-200 dark:border-gray-700">
         {!sidebarCollapsed ? (
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="h-2 w-2 bg-success-400 rounded-full animate-pulse" />
             </div>
             <div className="ml-3">
-              <p className="text-xs font-medium text-secondary-900">
+              <p className="text-xs font-medium text-secondary-900 dark:text-gray-100">
                 Система активна
               </p>
-              <p className="text-xs text-secondary-500">
+              <p className="text-xs text-secondary-500 dark:text-gray-400">
                 Данные обновляются
               </p>
             </div>
