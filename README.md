@@ -109,8 +109,8 @@ docker compose -f docker-compose.dev.yml up -d
 ```
 
 4. Откройте приложение:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3001
+- Frontend: http://localhost:4000
+- Backend API: http://localhost:4001
 
 Подробнее см. [README.docker.md](README.docker.md)
 

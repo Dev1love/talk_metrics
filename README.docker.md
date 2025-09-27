@@ -50,9 +50,9 @@ docker-compose -f docker-compose.dev.yml down
 
 После запуска доступны следующие сервисы:
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:3001
-- **PostgreSQL**: localhost:5432
+- **Frontend**: http://localhost:4000
+- **Backend API**: http://localhost:4001
+- **PostgreSQL**: localhost:5434
 
 ## Структура
 

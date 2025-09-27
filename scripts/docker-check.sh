@@ -140,9 +140,9 @@ print_instructions() {
     echo "  docker compose down"
     echo ""
     print_status $BLUE "Сервисы будут доступны на:"
-    echo "  Frontend: http://localhost:3000"
-    echo "  Backend:  http://localhost:3001"
-    echo "  Database: localhost:5432"
+    echo "  Frontend: http://localhost:4000"
+    echo "  Backend:  http://localhost:4001"
+    echo "  Database: localhost:5434"
 }
 
 # Main execution

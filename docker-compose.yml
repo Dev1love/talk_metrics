@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: talk_metrics_user
       POSTGRES_PASSWORD: talk_metrics_password
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile
     container_name: talk_metrics_backend
     ports:
-      - "3001:3001"
+      - "4001:3001"
     environment:
       NODE_ENV: production
       PORT: 3001
@@ -49,7 +49,7 @@ services:
       UPLOAD_ALLOWED_TYPES: txt,json
       RATE_LIMIT_WINDOW_MS: 900000
       RATE_LIMIT_MAX_REQUESTS: 100
-      CORS_ORIGIN: http://localhost:3000
+      CORS_ORIGIN: http://localhost:4000
       LOG_LEVEL: info
       LOG_FILE_PATH: ./logs/app.log
       JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_here_change_in_production}
@@ -71,7 +71,7 @@ services:
       dockerfile: Dockerfile
     container_name: talk_metrics_frontend
     ports:
-      - "3000:80"
+      - "4000:80"
     networks:
       - talk_metrics_network
     depends_on:
