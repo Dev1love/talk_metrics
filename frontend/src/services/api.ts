@@ -2,10 +2,24 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import toast from 'react-hot-toast'
 
 // Create axios instance with base configuration
+// Determine base URL based on environment
+const getBaseURL = () => {
+  // If we're in a containerized environment (Docker), use relative URL
+  if (process.env.NODE_ENV === 'production') {
+    return '/api/v1'
+  }
+
+  // For development, check if we're running on a non-localhost hostname (Docker)
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return '/api/v1'
+  }
+
+  // Default development setup
+  return 'http://localhost:4001/api/v1'
+}
+
 export const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production'
-    ? '/api/v1'
-    : 'http://localhost:4001/api/v1',
+  baseURL: getBaseURL(),
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
