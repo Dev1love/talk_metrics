@@ -6,7 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+# Note: For development mode, we need dev dependencies (like nodemon)
+# The container will be used for both prod and dev, so install all deps
+RUN npm ci
 
 # Copy application code
 COPY . .
