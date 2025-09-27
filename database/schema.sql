@@ -131,7 +131,9 @@ CREATE TABLE file_uploads (
     messages_created INTEGER DEFAULT 0,
     participants_created INTEGER DEFAULT 0,
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    processed_at TIMESTAMP WITH TIME ZONE
+    processed_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 -- Indexes for performance optimization
@@ -161,3 +163,4 @@ $$ language 'plpgsql';
 -- Triggers for automatic timestamp updates
 CREATE TRIGGER update_participants_updated_at BEFORE UPDATE ON participants FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_conversations_updated_at BEFORE UPDATE ON conversations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_file_uploads_updated_at BEFORE UPDATE ON file_uploads FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
