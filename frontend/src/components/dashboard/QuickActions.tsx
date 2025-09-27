@@ -80,12 +80,12 @@ const QuickActions: React.FC = () => {
   ]
 
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-secondary-200/50 p-8 shadow-soft hover:shadow-medium transition-all duration-300">
+    <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl border border-secondary-200/50 dark:border-gray-700/50 p-8 shadow-soft hover:shadow-medium transition-all duration-300">
       {/* Main actions */}
       <div className="mb-8">
         <div className="flex items-center mb-6">
           <div className="w-1 h-8 bg-gradient-to-b from-primary-500 to-purple-500 rounded-full mr-4"></div>
-          <h3 className="text-2xl font-bold text-secondary-900">
+          <h3 className="text-2xl font-bold text-secondary-900 dark:text-gray-100">
             Быстрые действия
           </h3>
         </div>
@@ -116,7 +116,7 @@ const QuickActions: React.FC = () => {
 
       {/* Secondary actions */}
       <div className="mb-8">
-        <h4 className="text-base font-semibold text-secondary-700 mb-4 flex items-center">
+        <h4 className="text-base font-semibold text-secondary-700 dark:text-gray-300 mb-4 flex items-center">
           <div className="w-1 h-6 bg-gradient-to-b from-secondary-500 to-secondary-600 rounded-full mr-3"></div>
           Инструменты
         </h4>
@@ -125,7 +125,7 @@ const QuickActions: React.FC = () => {
             <button
               key={action.id}
               onClick={action.onClick}
-              className="group flex items-center px-4 py-3 text-sm text-secondary-700 bg-gradient-to-r from-secondary-100 to-secondary-200 hover:from-primary-100 hover:to-primary-200 rounded-xl transition-all duration-200 shadow-sm hover:shadow-medium transform hover:-translate-y-0.5"
+              className="group flex items-center px-4 py-3 text-sm text-secondary-700 dark:text-gray-300 bg-gradient-to-r from-secondary-100 to-secondary-200 dark:from-gray-700 dark:to-gray-600 hover:from-primary-100 hover:to-primary-200 dark:hover:from-primary-800 dark:hover:to-primary-700 rounded-xl transition-all duration-200 shadow-sm hover:shadow-medium transform hover:-translate-y-0.5"
               style={{ animationDelay: `${index * 50 + 400}ms` }}
             >
               <div className="p-1 bg-white/60 rounded-lg mr-2 group-hover:bg-white/80 transition-colors duration-200">
@@ -139,7 +139,7 @@ const QuickActions: React.FC = () => {
 
       {/* Recent activity summary */}
       <div className="pt-6 border-t border-gradient-to-r from-secondary-200 via-primary-200 to-secondary-200">
-        <h4 className="text-base font-semibold text-secondary-700 mb-4 flex items-center">
+        <h4 className="text-base font-semibold text-secondary-700 dark:text-gray-300 mb-4 flex items-center">
           <div className="w-1 h-6 bg-gradient-to-b from-success-500 to-warning-500 rounded-full mr-3"></div>
           Активность
         </h4>
@@ -149,11 +149,11 @@ const QuickActions: React.FC = () => {
             { label: 'Обработано диалогов', value: 0, color: 'text-success-600' },
             { label: 'Создано инсайтов', value: 0, color: 'text-warning-600' }
           ].map((stat, index) => (
-            <div key={stat.label} className="text-center p-4 bg-gradient-to-r from-secondary-50 to-white rounded-xl border border-secondary-200/50 hover:border-primary-200 transition-colors duration-200">
+            <div key={stat.label} className="text-center p-4 bg-gradient-to-r from-secondary-50 to-white dark:from-gray-700 dark:to-gray-800 rounded-xl border border-secondary-200/50 dark:border-gray-600/50 hover:border-primary-200 dark:hover:border-primary-400 transition-colors duration-200">
               <div className={`text-2xl font-bold mb-1 ${stat.color}`}>
                 {stat.value}
               </div>
-              <div className="text-sm text-secondary-600 font-medium">{stat.label}</div>
+              <div className="text-sm text-secondary-600 dark:text-gray-400 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>

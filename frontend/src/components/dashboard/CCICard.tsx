@@ -41,7 +41,7 @@ const CCICard: React.FC = () => {
   }
 
   return (
-    <div className="relative bg-white rounded-2xl border border-secondary-200/50 p-8 shadow-soft hover:shadow-medium transition-all duration-300 overflow-hidden">
+    <div className="relative bg-white dark:bg-gray-800 rounded-2xl border border-secondary-200/50 dark:border-gray-700/50 p-8 shadow-soft hover:shadow-medium transition-all duration-300 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-success-500/10 to-warning-500/10 rounded-full blur-2xl"></div>
@@ -53,13 +53,13 @@ const CCICard: React.FC = () => {
             <Activity className="h-6 w-6 text-white" />
           </div>
           <div className="ml-3">
-            <h3 className="text-xl font-bold text-secondary-900">
+            <h3 className="text-xl font-bold text-secondary-900 dark:text-gray-100">
               Индекс качества
             </h3>
-            <p className="text-sm text-secondary-600">Communication Quality Index</p>
+            <p className="text-sm text-secondary-600 dark:text-gray-400">Communication Quality Index</p>
           </div>
         </div>
-        <div className="flex items-center bg-white/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-secondary-200/50">
+        <div className="flex items-center bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-secondary-200/50 dark:border-gray-600/50">
           {trend === 'up' ? (
             <TrendingUp className="h-4 w-4 text-success-600 mr-1" />
           ) : (
@@ -111,7 +111,7 @@ const CCICard: React.FC = () => {
               <div className={`text-4xl font-bold ${getScoreColor(cci_score)} mb-1`}>
                 {cci_score}
               </div>
-              <div className="text-secondary-500 text-sm font-medium">из 100</div>
+              <div className="text-secondary-500 dark:text-gray-400 text-sm font-medium">из 100</div>
             </div>
           </div>
         </div>
@@ -128,7 +128,7 @@ const CCICard: React.FC = () => {
           >
             {interpretation.level}
           </div>
-          <p className="text-base text-secondary-600 max-w-xs mx-auto leading-relaxed">
+          <p className="text-base text-secondary-600 dark:text-gray-300 max-w-xs mx-auto leading-relaxed">
             {interpretation.description}
           </p>
         </div>
@@ -136,7 +136,7 @@ const CCICard: React.FC = () => {
 
       {/* Component breakdown */}
       <div className="relative space-y-4">
-        <h4 className="text-base font-semibold text-secondary-700 mb-4 flex items-center">
+        <h4 className="text-base font-semibold text-secondary-700 dark:text-gray-300 mb-4 flex items-center">
           <div className="w-1 h-6 bg-gradient-to-b from-primary-500 to-purple-500 rounded-full mr-3"></div>
           Компоненты оценки
         </h4>
@@ -150,13 +150,13 @@ const CCICard: React.FC = () => {
         ].map(({ key, label, weight, icon }) => {
           const score = components[key as keyof typeof components]
           return (
-            <div key={key} className="group bg-gradient-to-r from-white to-secondary-50/50 rounded-xl p-4 border border-secondary-100 hover:border-primary-200 transition-all duration-200">
+            <div key={key} className="group bg-gradient-to-r from-white to-secondary-50/50 dark:from-gray-800 dark:to-gray-700/50 rounded-xl p-4 border border-secondary-100 dark:border-gray-600 hover:border-primary-200 dark:hover:border-primary-400 transition-all duration-200">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center">
                   <span className="text-lg mr-2">{icon}</span>
                   <div>
-                    <span className="text-sm font-semibold text-secondary-700">{label}</span>
-                    <span className="text-xs text-secondary-500 ml-2">({weight}%)</span>
+                    <span className="text-sm font-semibold text-secondary-700 dark:text-gray-300">{label}</span>
+                    <span className="text-xs text-secondary-500 dark:text-gray-400 ml-2">({weight}%)</span>
                   </div>
                 </div>
                 <span className={`text-sm font-bold px-2 py-1 rounded-lg ${
@@ -166,7 +166,7 @@ const CCICard: React.FC = () => {
                   {score}
                 </span>
               </div>
-              <div className="w-full bg-secondary-200 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-secondary-200 dark:bg-gray-600 rounded-full h-2 overflow-hidden">
                 <div
                   className={`h-2 rounded-full transition-all duration-1000 ease-out ${
                     score >= 80 ? 'bg-gradient-to-r from-success-400 to-success-600' :
@@ -184,17 +184,17 @@ const CCICard: React.FC = () => {
       {/* Recommendations */}
       {interpretation.recommendations && interpretation.recommendations.length > 0 && (
         <div className="relative mt-6 pt-6 border-t border-gradient-to-r from-secondary-200 via-primary-200 to-secondary-200">
-          <h4 className="text-base font-semibold text-secondary-700 mb-4 flex items-center">
+          <h4 className="text-base font-semibold text-secondary-700 dark:text-gray-300 mb-4 flex items-center">
             <div className="w-1 h-6 bg-gradient-to-b from-warning-500 to-error-500 rounded-full mr-3"></div>
             Рекомендации
           </h4>
           <div className="space-y-3">
             {interpretation.recommendations.slice(0, 2).map((rec, index) => (
-              <div key={index} className="flex items-start p-3 bg-gradient-to-r from-primary-50/50 to-purple-50/50 rounded-xl border border-primary-100/50">
+              <div key={index} className="flex items-start p-3 bg-gradient-to-r from-primary-50/50 to-purple-50/50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-xl border border-primary-100/50 dark:border-primary-700/50">
                 <div className="flex-shrink-0 w-6 h-6 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
                   <span className="text-white text-xs font-bold">{index + 1}</span>
                 </div>
-                <p className="text-sm text-secondary-700 leading-relaxed">{rec}</p>
+                <p className="text-sm text-secondary-700 dark:text-gray-300 leading-relaxed">{rec}</p>
               </div>
             ))}
           </div>
