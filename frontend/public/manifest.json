@@ -1,0 +1,13 @@
+{
+  "name": "TalkMetrics Dashboard",
+  "short_name": "TalkMetrics",
+  "description": "Chat analytics and communication quality assessment platform",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#3B82F6",
+  "background_color": "#F8FAFC",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [],
+  "categories": ["productivity", "business", "communication"]
+}

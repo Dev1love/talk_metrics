@@ -98,8 +98,8 @@ const ChatUpload: React.FC = () => {
 
     try {
       const formData = new FormData()
-      formData.append('file', file.file)
-      formData.append('type', file.file.name.endsWith('.json') ? 'telegram' : 'whatsapp')
+      formData.append('files', file.file)
+      formData.append('platform', file.file.name.endsWith('.json') ? 'telegram' : 'whatsapp')
 
       // Mock upload progress
       const progressInterval = setInterval(() => {

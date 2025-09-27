@@ -49,7 +49,7 @@ export const fetchUploadHistory = createAsyncThunk(
   'upload/fetchUploadHistory',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('/api/upload/history')
+      const response = await fetch('/api/v1/upload/history')
 
       if (!response.ok) {
         throw new Error('Failed to fetch upload history')
