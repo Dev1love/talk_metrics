@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 export const api = axios.create({
   baseURL: process.env.NODE_ENV === 'production'
     ? '/api/v1'
-    : 'http://localhost:3001/api/v1',
+    : 'http://localhost:4001/api/v1',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -135,6 +135,13 @@ export const endpoints = {
   generateInsights: '/ai/insights/generate',
   insights: '/ai/insights',
   markInsightAsAddressed: (id: string) => `/ai/insights/${id}/addressed`,
+
+  // Demo endpoints (fallback when database unavailable)
+  demoMetrics: '/demo/metrics',
+  demoInsights: '/demo/insights',
+  demoConversations: '/demo/conversations',
+  demoExportPdf: '/demo/export/pdf',
+  demoExportCsv: '/demo/export/csv',
 }
 
 // Utility functions for API calls

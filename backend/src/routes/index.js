@@ -7,6 +7,7 @@ const conversationRoutes = require('./conversations');
 const metricsRoutes = require('./metrics');
 const aiRoutes = require('./ai');
 const exportRoutes = require('./export');
+const demoRoutes = require('./demo');
 
 // Mount routes
 router.use('/upload', uploadRoutes);
@@ -14,6 +15,7 @@ router.use('/conversations', conversationRoutes);
 router.use('/metrics', metricsRoutes);
 router.use('/ai', aiRoutes);
 router.use('/export', exportRoutes);
+router.use('/demo', demoRoutes);
 
 // API info endpoint
 router.get('/', (req, res) => {
