@@ -108,18 +108,19 @@ const validatePlatform = (req, res, next) => {
 
 // Middleware to add file metadata
 const addFileMetadata = (req, res, next) => {
-  if (!req.files || req.files.length === 0) {
+  if (!req.file) {
     return res.status(400).json({
       success: false,
-      error: { message: 'No files uploaded' }
+      error: { message: 'No file uploaded' }
     });
   }
 
-  // Add metadata to each file
-  req.files.forEach(file => {
-    file.type = path.extname(file.originalname).toLowerCase().slice(1);
-    file.platform = req.body.platform;
-  });
+  // Add metadata to the file and convert to array for compatibility
+  req.file.type = path.extname(req.file.originalname).toLowerCase().slice(1);
+  req.file.platform = req.body.platform;
+
+  // Convert single file to array for controller compatibility
+  req.files = [req.file];
 
   next();
 };
@@ -139,7 +140,7 @@ const cleanupFiles = async (files) => {
 };
 
 module.exports = {
-  upload: upload.array('files', 5), // Accept up to 5 files with field name 'files'
+  upload: upload.single('files'), // Accept single file with field name 'files'
   handleUploadErrors,
   validatePlatform,
   addFileMetadata,
